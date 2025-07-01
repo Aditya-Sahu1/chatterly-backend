@@ -20,7 +20,7 @@ const controller_login=  async (req,res,next)=>{
     if(!matched){
         return res.status(200).json({
             succes:false,
-            msg:"Invalid password"
+            msg:"Wrong password"
         });
     };
 

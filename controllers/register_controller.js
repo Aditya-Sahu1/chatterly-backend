@@ -29,7 +29,7 @@ const controller_register = async (req, res,next) => {
 
     const payload={
       user:{
-        id:user._id,
+        _id:user._id,
         email:user.email
       }
     };
@@ -38,9 +38,10 @@ const controller_register = async (req, res,next) => {
       expiresIn:360000
     },(err,token)=>{
       if(err)throw err;
-      res.status(200).json({
-        sucess:true,
-        token:token
+      return res.status(200).json({
+        success:true,
+        token:token,
+        _id:user._id
        });
        
     });
@@ -52,6 +53,7 @@ const controller_register = async (req, res,next) => {
   } catch (error) {
     console.log(error);
     console.log(error.message);
+    next(error);
   }
 };
 
