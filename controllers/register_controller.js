@@ -10,6 +10,7 @@ const controller_register = async (req, res,next) => {
     const { name, email, password } = req.body;
     const existing_user = await User.findOne({ email: email });
     if (existing_user) {
+      
       return res.json({
         success: false,
         msg: "user already exists",
