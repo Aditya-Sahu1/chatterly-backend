@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
 const message_model = require("../models/message_model");
-const {io}=require('../app')
 const Joi=require('joi')
+const { getIO } = require('../socket');
 const messageSchema = Joi.object({
   message: Joi.string().min(1).required(),
   receiverId: Joi.string().required(),
@@ -35,6 +35,11 @@ const sendMessage = async (req, res) => {
 
 
     await newMessage.save();
+
+
+const io = getIO();
+
+
     io.to(receiverId).emit("receive_message", {
     senderId,
     newMessage,

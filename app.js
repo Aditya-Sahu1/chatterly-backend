@@ -28,28 +28,10 @@ app.use("/chatapp/api/auth",auth_routes_handler);
 app.use("/chatapp/api",user_routes_handler);
 
 const port= process.env.PORT||3000;
-const io= new Server(server ,{
-    cors:{
-        origin:"*",
-    }
-});
-
 server.listen(port, ()=>{
     console.log(`Server runing on port ${port}`)
 });
 // app.listen(port);
-io.on("connection", (socket) => {
-    console.log("✅ A user connected:", socket.id);
 
-    socket.on("join", (userId) => {
-        // Join a private room based on userId
-        socket.join(userId);
-        console.log(`🔐 User ${userId} joined their room`);
-    });
-
-    socket.on("disconnect", () => {
-        console.log("A user disconnected");
-    });
-});
-
-module.exports.io=io;
+const socket = require('./socket');
+const io = socket.init(server);
